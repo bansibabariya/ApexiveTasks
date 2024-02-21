@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<t t-extend="HrAttendanceMyMainMenu">
+		<t t-jquery="*[t-esc='widget.employee.name']" t-operation="after">
+			<t t-if="widget.projects and widget.projects.project_ids">
+
+				<div name="project_select" class="mt32 mb8 row">
+					<label for="project" class="col-4">Project:</label>
+					<select class="col-8" name="project_id" id="project"  style="min-width: 255px;border: 1px solid #ddd;height: 35px;border-radius: 3px;">
+						<option selected="selected" value=""></option>
+						<t t-foreach="widget.projects.project_ids" t-as="project">
+							<t t-if="widget.projects.current_project_id.id == project.id">
+								<option t-att-value="project.id" selected="selected">
+									<t t-esc="project.name"/>
+								</option>
+							</t>
+							<t t-else="">
+								<option t-att-value="project.id">
+									<t t-esc="project.name"/>
+								</option>
+							</t>
+						</t>
+					</select>
+				</div>
+				<div name="project_task_select" class="mb8 row">
+					<label for="projectTask" class="col-4">Task:</label>
+					<select class="col-8" name="project_task_id" id="projectTask" style="min-width: 255px;border: 1px solid #ddd;height: 35px;border-radius: 3px;">
+						<option selected="selected" value=""></option>
+						<t t-foreach="widget.projects.project_task_ids" t-as="task">
+							<t t-if="widget.projects.current_project_task_id.id == task.id">
+								<option t-att-value="task.id" selected="selected">
+									<t t-esc="task.name"/>
+								</option>
+							</t>
+							<t t-elif="widget.projects.current_project_id.id == task.project_id">
+								<option t-att-value="task.id">
+									<t t-esc="task.name" />
+								</option>
+							</t>
+						</t>
+					</select>
+				</div>
+				<div name="attend_description" class="mb32 mb8 row">
+					<label for="attend_description" class="col-4">Description:</label>
+					<t t-if="widget.projects.current_description != false">
+						<textarea id="attend_description" class="col-8" name="attend_description">
+							<t t-esc="widget.projects.current_description"  style="min-width: 255px;border: 1px solid #ddd;height: 35px;border-radius: 3px;"/></textarea>
+					</t>
+					<t t-else="">
+						<textarea id="attend_description" class="col-8" name="attend_description" style="border: 1px solid #ddd;height: 35px;border-radius: 3px;"/>
+					</t>
+				</div>
+
+			</t>
+		</t>
+	</t>
+</templates>
